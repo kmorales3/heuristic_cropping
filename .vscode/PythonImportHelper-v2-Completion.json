@@ -1,0 +1,119 @@
+[
+    {
+        "label": "cv2",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "cv2",
+        "description": "cv2",
+        "detail": "cv2",
+        "documentation": {}
+    },
+    {
+        "label": "numpy",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "numpy",
+        "description": "numpy",
+        "detail": "numpy",
+        "documentation": {}
+    },
+    {
+        "label": "resize_image",
+        "kind": 2,
+        "importPath": "heuristic_cropping",
+        "description": "heuristic_cropping",
+        "peekOfCode": "def resize_image(image, max_width=1920*2, max_height=1080*2):\n    \"\"\"Resizes the image to fit within the specified dimensions while maintaining aspect ratio.\"\"\"\n    height, width = image.shape[:2]\n    scaling_factor = min(max_width / width, max_height / height)\n    new_size = (int(width * scaling_factor), int(height * scaling_factor))\n    return cv2.resize(image, new_size, interpolation=cv2.INTER_AREA)\ndef resize_to_height(image, target_height=1024):\n    \"\"\"Resizes the image to a consistent height while maintaining aspect ratio.\"\"\"\n    height, width = image.shape[:2]\n    scaling_factor = target_height / height",
+        "detail": "heuristic_cropping",
+        "documentation": {}
+    },
+    {
+        "label": "resize_to_height",
+        "kind": 2,
+        "importPath": "heuristic_cropping",
+        "description": "heuristic_cropping",
+        "peekOfCode": "def resize_to_height(image, target_height=1024):\n    \"\"\"Resizes the image to a consistent height while maintaining aspect ratio.\"\"\"\n    height, width = image.shape[:2]\n    scaling_factor = target_height / height\n    new_width = int(width * scaling_factor)\n    new_size = (new_width, target_height)  # (width, height)\n    resized_image = cv2.resize(image, new_size, interpolation=cv2.INTER_AREA)\n    return resized_image, scaling_factor\n# Load the image in grayscale\nimage = cv2.imread(",
+        "detail": "heuristic_cropping",
+        "documentation": {}
+    },
+    {
+        "label": "image",
+        "kind": 5,
+        "importPath": "heuristic_cropping",
+        "description": "heuristic_cropping",
+        "peekOfCode": "image = cv2.imread(\n    r'/Users/kevinmorales/Downloads/trnv images/Southeast Corridor_DTTX-729733.jpg',\n    cv2.IMREAD_GRAYSCALE,\n)\n# Step 1: Resize the image to a consistent height\nresized_image, scaling_factor = resize_to_height(image)\n# Step 2: Apply histogram equalization to enhance contrast\nequalized_image = cv2.equalizeHist(image)\n# Step 3: Detect vertical edges using the Sobel filter\nsobel_vertical = cv2.Sobel(equalized_image, cv2.CV_64F, 1, 0, ksize=3)",
+        "detail": "heuristic_cropping",
+        "documentation": {}
+    },
+    {
+        "label": "equalized_image",
+        "kind": 5,
+        "importPath": "heuristic_cropping",
+        "description": "heuristic_cropping",
+        "peekOfCode": "equalized_image = cv2.equalizeHist(image)\n# Step 3: Detect vertical edges using the Sobel filter\nsobel_vertical = cv2.Sobel(equalized_image, cv2.CV_64F, 1, 0, ksize=3)\nsobel_vertical_abs = cv2.convertScaleAbs(sobel_vertical)\nresized_edges = resize_image(sobel_vertical_abs)\n# Step 4: Threshold the vertical edges to isolate strong edges\n_, binary_edges = cv2.threshold(sobel_vertical_abs, 23, 255, cv2.THRESH_BINARY)\n# - 50: Threshold value. Increase for stricter filtering of edges.\nresized_binary_edges = resize_image(binary_edges)\n# Step 5: Find contours of the vertical edges",
+        "detail": "heuristic_cropping",
+        "documentation": {}
+    },
+    {
+        "label": "sobel_vertical",
+        "kind": 5,
+        "importPath": "heuristic_cropping",
+        "description": "heuristic_cropping",
+        "peekOfCode": "sobel_vertical = cv2.Sobel(equalized_image, cv2.CV_64F, 1, 0, ksize=3)\nsobel_vertical_abs = cv2.convertScaleAbs(sobel_vertical)\nresized_edges = resize_image(sobel_vertical_abs)\n# Step 4: Threshold the vertical edges to isolate strong edges\n_, binary_edges = cv2.threshold(sobel_vertical_abs, 23, 255, cv2.THRESH_BINARY)\n# - 50: Threshold value. Increase for stricter filtering of edges.\nresized_binary_edges = resize_image(binary_edges)\n# Step 5: Find contours of the vertical edges\ncontours, _ = cv2.findContours(binary_edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)\n# Step 6: Identify container ends",
+        "detail": "heuristic_cropping",
+        "documentation": {}
+    },
+    {
+        "label": "sobel_vertical_abs",
+        "kind": 5,
+        "importPath": "heuristic_cropping",
+        "description": "heuristic_cropping",
+        "peekOfCode": "sobel_vertical_abs = cv2.convertScaleAbs(sobel_vertical)\nresized_edges = resize_image(sobel_vertical_abs)\n# Step 4: Threshold the vertical edges to isolate strong edges\n_, binary_edges = cv2.threshold(sobel_vertical_abs, 23, 255, cv2.THRESH_BINARY)\n# - 50: Threshold value. Increase for stricter filtering of edges.\nresized_binary_edges = resize_image(binary_edges)\n# Step 5: Find contours of the vertical edges\ncontours, _ = cv2.findContours(binary_edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)\n# Step 6: Identify container ends\ncontainer_ends = []",
+        "detail": "heuristic_cropping",
+        "documentation": {}
+    },
+    {
+        "label": "resized_edges",
+        "kind": 5,
+        "importPath": "heuristic_cropping",
+        "description": "heuristic_cropping",
+        "peekOfCode": "resized_edges = resize_image(sobel_vertical_abs)\n# Step 4: Threshold the vertical edges to isolate strong edges\n_, binary_edges = cv2.threshold(sobel_vertical_abs, 23, 255, cv2.THRESH_BINARY)\n# - 50: Threshold value. Increase for stricter filtering of edges.\nresized_binary_edges = resize_image(binary_edges)\n# Step 5: Find contours of the vertical edges\ncontours, _ = cv2.findContours(binary_edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)\n# Step 6: Identify container ends\ncontainer_ends = []\nfor contour in contours:",
+        "detail": "heuristic_cropping",
+        "documentation": {}
+    },
+    {
+        "label": "resized_binary_edges",
+        "kind": 5,
+        "importPath": "heuristic_cropping",
+        "description": "heuristic_cropping",
+        "peekOfCode": "resized_binary_edges = resize_image(binary_edges)\n# Step 5: Find contours of the vertical edges\ncontours, _ = cv2.findContours(binary_edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)\n# Step 6: Identify container ends\ncontainer_ends = []\nfor contour in contours:\n    x, y, w, h = cv2.boundingRect(contour)\n    aspect_ratio = h / w  # Containers are tall, so height > width.\n    if 0.2 < aspect_ratio < 15 and w > 5 and h > 500:  # Adjust as needed\n        container_ends.append((x, y, w, h))",
+        "detail": "heuristic_cropping",
+        "documentation": {}
+    },
+    {
+        "label": "container_ends",
+        "kind": 5,
+        "importPath": "heuristic_cropping",
+        "description": "heuristic_cropping",
+        "peekOfCode": "container_ends = []\nfor contour in contours:\n    x, y, w, h = cv2.boundingRect(contour)\n    aspect_ratio = h / w  # Containers are tall, so height > width.\n    if 0.2 < aspect_ratio < 15 and w > 5 and h > 500:  # Adjust as needed\n        container_ends.append((x, y, w, h))\n# Sort container ends by their x-coordinate (horizontal position)\ncontainer_ends = sorted(container_ends, key=lambda end: end[0])\n# Step 7: Crop regions of interest based on container ends\ncropped_regions = []",
+        "detail": "heuristic_cropping",
+        "documentation": {}
+    },
+    {
+        "label": "container_ends",
+        "kind": 5,
+        "importPath": "heuristic_cropping",
+        "description": "heuristic_cropping",
+        "peekOfCode": "container_ends = sorted(container_ends, key=lambda end: end[0])\n# Step 7: Crop regions of interest based on container ends\ncropped_regions = []\nfor (x, y, w, h) in container_ends:\n    # Crop a fixed width (e.g., 400 pixels) from the detected edge\n    crop_width = int(1400 * scaling_factor)  # Total crop width\n    half_crop_width = crop_width // 2  # Half of the crop width for centering\n    # Ensure we don't go out of bounds\n    start_x = max(0, x - half_crop_width)  # Start at x minus half the crop width\n    end_x = min(image.shape[1], x + half_crop_width)  # End at x plus half the crop width",
+        "detail": "heuristic_cropping",
+        "documentation": {}
+    },
+    {
+        "label": "cropped_regions",
+        "kind": 5,
+        "importPath": "heuristic_cropping",
+        "description": "heuristic_cropping",
+        "peekOfCode": "cropped_regions = []\nfor (x, y, w, h) in container_ends:\n    # Crop a fixed width (e.g., 400 pixels) from the detected edge\n    crop_width = int(1400 * scaling_factor)  # Total crop width\n    half_crop_width = crop_width // 2  # Half of the crop width for centering\n    # Ensure we don't go out of bounds\n    start_x = max(0, x - half_crop_width)  # Start at x minus half the crop width\n    end_x = min(image.shape[1], x + half_crop_width)  # End at x plus half the crop width\n    cropped_region = image[:, start_x:end_x]\n    cropped_regions.append(cropped_region)",
+        "detail": "heuristic_cropping",
+        "documentation": {}
+    }
+]
