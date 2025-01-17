@@ -1,11 +1,19 @@
 [
     {
-        "label": "os",
+        "label": "load_model",
+        "importPath": "tensorflow.keras.models",
+        "description": "tensorflow.keras.models",
+        "isExtraImport": true,
+        "detail": "tensorflow.keras.models",
+        "documentation": {}
+    },
+    {
+        "label": "tensorflow",
         "kind": 6,
         "isExtraImport": true,
-        "importPath": "os",
-        "description": "os",
-        "detail": "os",
+        "importPath": "tensorflow",
+        "description": "tensorflow",
+        "detail": "tensorflow",
         "documentation": {}
     },
     {
@@ -15,6 +23,24 @@
         "importPath": "cv2",
         "description": "cv2",
         "detail": "cv2",
+        "documentation": {}
+    },
+    {
+        "label": "numpy",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "numpy",
+        "description": "numpy",
+        "detail": "numpy",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
         "documentation": {}
     },
     {
@@ -32,6 +58,111 @@
         "description": "ultralytics",
         "isExtraImport": true,
         "detail": "ultralytics",
+        "documentation": {}
+    },
+    {
+        "label": "layers",
+        "importPath": "tensorflow.keras",
+        "description": "tensorflow.keras",
+        "isExtraImport": true,
+        "detail": "tensorflow.keras",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "tensorflow.keras",
+        "description": "tensorflow.keras",
+        "isExtraImport": true,
+        "detail": "tensorflow.keras",
+        "documentation": {}
+    },
+    {
+        "label": "ImageDataGenerator",
+        "importPath": "tensorflow.keras.preprocessing.image",
+        "description": "tensorflow.keras.preprocessing.image",
+        "isExtraImport": true,
+        "detail": "tensorflow.keras.preprocessing.image",
+        "documentation": {}
+    },
+    {
+        "label": "matplotlib.pyplot",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "matplotlib.pyplot",
+        "description": "matplotlib.pyplot",
+        "detail": "matplotlib.pyplot",
+        "documentation": {}
+    },
+    {
+        "label": "preprocess_image",
+        "kind": 2,
+        "importPath": "cnn_inference",
+        "description": "cnn_inference",
+        "peekOfCode": "def preprocess_image(image_path, target_size=(128, 128)):\n    \"\"\"\n    Preprocesses the input image:\n    - Loads the image from the given path.\n    - Resizes it to the target size.\n    - Normalizes pixel values between 0 and 1.\n    Returns:\n        The preprocessed image as a NumPy array ready for model inference.\n    \"\"\"\n    # Load the image",
+        "detail": "cnn_inference",
+        "documentation": {}
+    },
+    {
+        "label": "model",
+        "kind": 5,
+        "importPath": "cnn_inference",
+        "description": "cnn_inference",
+        "peekOfCode": "model = load_model(r'C:\\Users\\c883206\\OneDrive - BNSF Railway\\RoboRailCop\\heuristic_cropping_attempt\\5_class_cnn_model.h5')\ndef preprocess_image(image_path, target_size=(128, 128)):\n    \"\"\"\n    Preprocesses the input image:\n    - Loads the image from the given path.\n    - Resizes it to the target size.\n    - Normalizes pixel values between 0 and 1.\n    Returns:\n        The preprocessed image as a NumPy array ready for model inference.\n    \"\"\"",
+        "detail": "cnn_inference",
+        "documentation": {}
+    },
+    {
+        "label": "image_path",
+        "kind": 5,
+        "importPath": "cnn_inference",
+        "description": "cnn_inference",
+        "peekOfCode": "image_path = r\"C:\\Users\\c883206\\OneDrive - BNSF Railway\\RoboRailCop\\2025-01-16_all_trnv_images\\dataset\\test\\open_door\\cropped_region_39743_91.jpg\"\n# Preprocess the image\ninput_image = preprocess_image(image_path)\n# Perform inference\npredictions = model.predict(input_image)\n# The output of `model.predict` will be a probability distribution for each class\nprint(\"Predictions:\", predictions)\n# Get the class with the highest probability\npredicted_class = np.argmax(predictions, axis=1)  # Index of the highest probability\nprint(f\"Predicted Class: {predicted_class}\")",
+        "detail": "cnn_inference",
+        "documentation": {}
+    },
+    {
+        "label": "input_image",
+        "kind": 5,
+        "importPath": "cnn_inference",
+        "description": "cnn_inference",
+        "peekOfCode": "input_image = preprocess_image(image_path)\n# Perform inference\npredictions = model.predict(input_image)\n# The output of `model.predict` will be a probability distribution for each class\nprint(\"Predictions:\", predictions)\n# Get the class with the highest probability\npredicted_class = np.argmax(predictions, axis=1)  # Index of the highest probability\nprint(f\"Predicted Class: {predicted_class}\")\n# Define your class labels (these must match the order used during training)\nclass_labels = ['closed door', 'container face', 'container side', 'handholds', 'open door']",
+        "detail": "cnn_inference",
+        "documentation": {}
+    },
+    {
+        "label": "predictions",
+        "kind": 5,
+        "importPath": "cnn_inference",
+        "description": "cnn_inference",
+        "peekOfCode": "predictions = model.predict(input_image)\n# The output of `model.predict` will be a probability distribution for each class\nprint(\"Predictions:\", predictions)\n# Get the class with the highest probability\npredicted_class = np.argmax(predictions, axis=1)  # Index of the highest probability\nprint(f\"Predicted Class: {predicted_class}\")\n# Define your class labels (these must match the order used during training)\nclass_labels = ['closed door', 'container face', 'container side', 'handholds', 'open door']\n# Get the predicted class label\npredicted_label = class_labels[predicted_class[0]]",
+        "detail": "cnn_inference",
+        "documentation": {}
+    },
+    {
+        "label": "predicted_class",
+        "kind": 5,
+        "importPath": "cnn_inference",
+        "description": "cnn_inference",
+        "peekOfCode": "predicted_class = np.argmax(predictions, axis=1)  # Index of the highest probability\nprint(f\"Predicted Class: {predicted_class}\")\n# Define your class labels (these must match the order used during training)\nclass_labels = ['closed door', 'container face', 'container side', 'handholds', 'open door']\n# Get the predicted class label\npredicted_label = class_labels[predicted_class[0]]\nprint(f\"Predicted Label: {predicted_label}\")",
+        "detail": "cnn_inference",
+        "documentation": {}
+    },
+    {
+        "label": "class_labels",
+        "kind": 5,
+        "importPath": "cnn_inference",
+        "description": "cnn_inference",
+        "peekOfCode": "class_labels = ['closed door', 'container face', 'container side', 'handholds', 'open door']\n# Get the predicted class label\npredicted_label = class_labels[predicted_class[0]]\nprint(f\"Predicted Label: {predicted_label}\")",
+        "detail": "cnn_inference",
+        "documentation": {}
+    },
+    {
+        "label": "predicted_label",
+        "kind": 5,
+        "importPath": "cnn_inference",
+        "description": "cnn_inference",
+        "peekOfCode": "predicted_label = class_labels[predicted_class[0]]\nprint(f\"Predicted Label: {predicted_label}\")",
+        "detail": "cnn_inference",
         "documentation": {}
     },
     {
@@ -122,6 +253,87 @@
         "description": "common_obj_detection",
         "peekOfCode": "crop_location = r\"C:\\Users\\c883206\\OneDrive - BNSF Railway\\RoboRailCop\\2025-01-16_all_trnv_images\\crops\"\nfor crop in os.listdir(crop_location):\n    if crop.endswith(('.jpg', '.jpeg', '.png')):\n        # Load an image\n        img = cv2.imread(os.path.join(crop_location, crop))  # Replace with your image path\n        # Perform object detection\n        results = model.predict(source=img)  # Use 'cap' for video\n        # Process the results\n        detection_made = False\n        for result in results:",
         "detail": "common_obj_detection",
+        "documentation": {}
+    },
+    {
+        "label": "create_model",
+        "kind": 2,
+        "importPath": "create_cnn_model",
+        "description": "create_cnn_model",
+        "peekOfCode": "def create_model():\n    model = models.Sequential([\n        layers.Conv2D(32, (3, 3), activation='relu', input_shape=(128, 128, 3)),\n        layers.MaxPooling2D((2, 2)),\n        layers.Conv2D(64, (3, 3), activation='relu'),\n        layers.MaxPooling2D((2, 2)),\n        layers.Conv2D(128, (3, 3), activation='relu'),\n        layers.MaxPooling2D((2, 2)),\n        layers.Flatten(),\n        layers.Dense(128, activation='relu'),",
+        "detail": "create_cnn_model",
+        "documentation": {}
+    },
+    {
+        "label": "train_datagen",
+        "kind": 5,
+        "importPath": "create_cnn_model",
+        "description": "create_cnn_model",
+        "peekOfCode": "train_datagen = ImageDataGenerator(\n    rescale=1./255,         # Normalize pixel values between 0 and 1\n    rotation_range=20,      # Randomly rotate images\n    width_shift_range=0.2,  # Randomly shift horizontally\n    height_shift_range=0.2, # Randomly shift vertically\n    zoom_range=0.2,         # Randomly zoom in/out\n    horizontal_flip=True,   # Randomly flip images horizontally\n)\n# Validation data (no augmentation, just rescaling)\nvalidation_datagen = ImageDataGenerator(rescale=1./255)",
+        "detail": "create_cnn_model",
+        "documentation": {}
+    },
+    {
+        "label": "validation_datagen",
+        "kind": 5,
+        "importPath": "create_cnn_model",
+        "description": "create_cnn_model",
+        "peekOfCode": "validation_datagen = ImageDataGenerator(rescale=1./255)\n# Load training and validation datasets\ntrain_data = train_datagen.flow_from_directory(\n    r\"C:\\Users\\c883206\\OneDrive - BNSF Railway\\RoboRailCop\\2025-01-16_all_trnv_images\\dataset\\train\",\n    target_size=(128, 128),  # Resize images to 128x128\n    batch_size=32,\n    class_mode='categorical',  # For multi-class classification\n)\nvalidation_data = validation_datagen.flow_from_directory(\n    r\"C:\\Users\\c883206\\OneDrive - BNSF Railway\\RoboRailCop\\2025-01-16_all_trnv_images\\dataset\\validation\",",
+        "detail": "create_cnn_model",
+        "documentation": {}
+    },
+    {
+        "label": "train_data",
+        "kind": 5,
+        "importPath": "create_cnn_model",
+        "description": "create_cnn_model",
+        "peekOfCode": "train_data = train_datagen.flow_from_directory(\n    r\"C:\\Users\\c883206\\OneDrive - BNSF Railway\\RoboRailCop\\2025-01-16_all_trnv_images\\dataset\\train\",\n    target_size=(128, 128),  # Resize images to 128x128\n    batch_size=32,\n    class_mode='categorical',  # For multi-class classification\n)\nvalidation_data = validation_datagen.flow_from_directory(\n    r\"C:\\Users\\c883206\\OneDrive - BNSF Railway\\RoboRailCop\\2025-01-16_all_trnv_images\\dataset\\validation\",\n    target_size=(128, 128),\n    batch_size=32,",
+        "detail": "create_cnn_model",
+        "documentation": {}
+    },
+    {
+        "label": "validation_data",
+        "kind": 5,
+        "importPath": "create_cnn_model",
+        "description": "create_cnn_model",
+        "peekOfCode": "validation_data = validation_datagen.flow_from_directory(\n    r\"C:\\Users\\c883206\\OneDrive - BNSF Railway\\RoboRailCop\\2025-01-16_all_trnv_images\\dataset\\validation\",\n    target_size=(128, 128),\n    batch_size=32,\n    class_mode='categorical',\n)\nmodel = create_model()\nmodel.compile(\n    optimizer='adam', \n    loss='categorical_crossentropy',",
+        "detail": "create_cnn_model",
+        "documentation": {}
+    },
+    {
+        "label": "model",
+        "kind": 5,
+        "importPath": "create_cnn_model",
+        "description": "create_cnn_model",
+        "peekOfCode": "model = create_model()\nmodel.compile(\n    optimizer='adam', \n    loss='categorical_crossentropy',\n    metrics=['accuracy']\n)\nhistory = model.fit(\n    train_data,\n    validation_data=validation_data,\n    epochs=20,  # Number of training epochs",
+        "detail": "create_cnn_model",
+        "documentation": {}
+    },
+    {
+        "label": "history",
+        "kind": 5,
+        "importPath": "create_cnn_model",
+        "description": "create_cnn_model",
+        "peekOfCode": "history = model.fit(\n    train_data,\n    validation_data=validation_data,\n    epochs=20,  # Number of training epochs\n)\n# Test dataset\ntest_datagen = ImageDataGenerator(rescale=1./255)\ntest_data = test_datagen.flow_from_directory(\n    r\"C:\\Users\\c883206\\OneDrive - BNSF Railway\\RoboRailCop\\2025-01-16_all_trnv_images\\dataset\\test\",\n    target_size=(128, 128),",
+        "detail": "create_cnn_model",
+        "documentation": {}
+    },
+    {
+        "label": "test_datagen",
+        "kind": 5,
+        "importPath": "create_cnn_model",
+        "description": "create_cnn_model",
+        "peekOfCode": "test_datagen = ImageDataGenerator(rescale=1./255)\ntest_data = test_datagen.flow_from_directory(\n    r\"C:\\Users\\c883206\\OneDrive - BNSF Railway\\RoboRailCop\\2025-01-16_all_trnv_images\\dataset\\test\",\n    target_size=(128, 128),\n    batch_size=32,\n    class_mode='categorical',\n)\n# Evaluate the model\ntest_loss, test_accuracy = model.evaluate(test_data)\nprint(f\"Test Loss: {test_loss}, Test Accuracy: {test_accuracy}\")",
+        "detail": "create_cnn_model",
+        "documentation": {}
+    },
+    {
+        "label": "test_data",
+        "kind": 5,
+        "importPath": "create_cnn_model",
+        "description": "create_cnn_model",
+        "peekOfCode": "test_data = test_datagen.flow_from_directory(\n    r\"C:\\Users\\c883206\\OneDrive - BNSF Railway\\RoboRailCop\\2025-01-16_all_trnv_images\\dataset\\test\",\n    target_size=(128, 128),\n    batch_size=32,\n    class_mode='categorical',\n)\n# Evaluate the model\ntest_loss, test_accuracy = model.evaluate(test_data)\nprint(f\"Test Loss: {test_loss}, Test Accuracy: {test_accuracy}\")\n# Plot accuracy",
+        "detail": "create_cnn_model",
         "documentation": {}
     },
     {

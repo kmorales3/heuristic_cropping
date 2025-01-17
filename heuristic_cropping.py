@@ -1,7 +1,6 @@
-#!"/Users/kevinmorales/Documents/Work Stuff/heuristic_cropping/heuristic_cropping/heuristic_cropping/.venv/bin/python"
+#!"C:\Users\c883206\OneDrive - BNSF Railway\RoboRailCop\heuristic_cropping_attempt\.venv\Scripts\python.exe"
 import cv2
 import os
-
 
 def resize_image(image, max_width=1920*2, max_height=1080*2):
     """Resizes the image to fit within the specified dimensions while maintaining aspect ratio."""
@@ -9,7 +8,6 @@ def resize_image(image, max_width=1920*2, max_height=1080*2):
     scaling_factor = min(max_width / width, max_height / height)
     new_size = (int(width * scaling_factor), int(height * scaling_factor))
     return cv2.resize(image, new_size, interpolation=cv2.INTER_AREA)
-
 
 def resize_to_height(image, target_height=1024):
     """Resizes the image to a consistent height while maintaining aspect ratio."""
@@ -19,7 +17,6 @@ def resize_to_height(image, target_height=1024):
     new_size = (new_width, target_height)  # (width, height)
     resized_image = cv2.resize(image, new_size, interpolation=cv2.INTER_AREA)
     return resized_image, scaling_factor
-
 
 trnv_image_loc = r'C:\Users\c883206\OneDrive - BNSF Railway\RoboRailCop\2025-01-16_all_trnv_images\trnvopendoor'
 
@@ -41,9 +38,7 @@ for trnv_image in os.listdir(trnv_image_loc):
         resized_edges = resize_image(sobel_vertical_abs)
 
         # Step 4: Threshold the vertical edges to isolate strong edges
-        # 22 for production
-        _, binary_edges = cv2.threshold(sobel_vertical_abs, 23, 255, cv2.THRESH_BINARY)
-        # - 50: Threshold value. Increase for stricter filtering of edges.
+        _, binary_edges = cv2.threshold(sobel_vertical_abs, 35, 255, cv2.THRESH_BINARY)
 
         resized_binary_edges = resize_image(binary_edges)
 
@@ -52,6 +47,16 @@ for trnv_image in os.listdir(trnv_image_loc):
 
         # Step 6: Identify container ends
         container_ends = []
+        for contour in contours:
+            x, y, w, h = cv2.boundingRect(contour)
+            aspect_ratio = h / w  # Containers are tall, so height > width.
+            if 0.2 < aspect_ratio < 15 and w > 5 and h > 500:  # Adjust as needed
+                container_ends.append((x, y, w, h))
+
+        # Sort container ends by their x-coordinate (horizontal position)
+        container_ends = sorted(container_ends, key=lambda end: end[0])
+
+        # Step 7: Crop regions of interest based on container ends
         cropped_regions = []
         for (x, y, w, h) in container_ends:
             # Crop a fixed width (e.g., 2000 pixels) from the detected edge

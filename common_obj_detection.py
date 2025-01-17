@@ -1,4 +1,4 @@
-#!"/Users/kevinmorales/Documents/Work Stuff/heuristic_cropping/heuristic_cropping/heuristic_cropping/.venv/bin/python"
+#!"C:\Users\c883206\OneDrive - BNSF Railway\RoboRailCop\heuristic_cropping_attempt\.venv\Scripts\python.exe"
 import cv2
 from ultralytics import YOLO
 import os
@@ -32,7 +32,7 @@ for crop in os.listdir(crop_location):
 
                 # Draw bounding box and label on the image
                 cv2.rectangle(img, (x1, y1), (x2, y2), (0, 255, 0), 2)
-                cv2.putText(img, f"{model.names[class_id]} {confidence:.2f}", (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+                cv2.putText(img, f"{model.names[class_id]} {confidence:.2f}", (x1, y1 + 20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
         # Only display the image if a detection was made
         if detection_made:
