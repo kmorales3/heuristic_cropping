@@ -1,4 +1,4 @@
-#!"c:/Users/c883206/OneDrive - BNSF Railway/RoboRailCop/heuristic_cropping_attempt/.venv/Scripts/python"
+#!"/Users/kevinmorales/Documents/Work Stuff/heuristic_cropping/heuristic_cropping/heuristic_cropping/.venv/bin/python"
 
 import os
 import cv2

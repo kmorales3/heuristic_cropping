@@ -1,4 +1,4 @@
-#!"c:/Users/c883206/OneDrive - BNSF Railway/RoboRailCop/heuristic_cropping_attempt/.venv/Scripts/python"
+#!"/Users/kevinmorales/Documents/Work Stuff/heuristic_cropping/heuristic_cropping/heuristic_cropping/.venv/bin/python"
 import cv2
 import os
 
@@ -41,6 +41,7 @@ for trnv_image in os.listdir(trnv_image_loc):
         resized_edges = resize_image(sobel_vertical_abs)
 
         # Step 4: Threshold the vertical edges to isolate strong edges
+        # 22 for production
         _, binary_edges = cv2.threshold(sobel_vertical_abs, 23, 255, cv2.THRESH_BINARY)
         # - 50: Threshold value. Increase for stricter filtering of edges.
 
@@ -51,26 +52,25 @@ for trnv_image in os.listdir(trnv_image_loc):
 
         # Step 6: Identify container ends
         container_ends = []
-        for contour in contours:
-            x, y, w, h = cv2.boundingRect(contour)
-            aspect_ratio = h / w  # Containers are tall, so height > width.
-            if 0.2 < aspect_ratio < 15 and w > 5 and h > 500:  # Adjust as needed
-                container_ends.append((x, y, w, h))
-
-        # Sort container ends by their x-coordinate (horizontal position)
-        container_ends = sorted(container_ends, key=lambda end: end[0])
-
-        # Step 7: Crop regions of interest based on container ends
         cropped_regions = []
         for (x, y, w, h) in container_ends:
-            # Crop a fixed width (e.g., 400 pixels) from the detected edge
+            # Crop a fixed width (e.g., 2000 pixels) from the detected edge
             crop_width = int(2000 * scaling_factor)  # Total crop width
             half_crop_width = crop_width // 2  # Half of the crop width for centering
 
-            # Ensure we don't go out of bounds
-            start_x = max(0, x - half_crop_width)  # Start at x minus half the crop width
-            end_x = min(image.shape[1], x + half_crop_width)  # End at x plus half the crop width
+            # Calculate start_x and end_x
+            start_x = x - half_crop_width
+            end_x = x + half_crop_width
 
+            # Adjust the bounds to ensure the crop is within the image
+            if start_x < 0:  # If the crop goes out of bounds on the left
+                start_x = 0
+                end_x = crop_width  # Ensure the crop width remains consistent
+            elif end_x > image.shape[1]:  # If the crop goes out of bounds on the right
+                end_x = image.shape[1]
+                start_x = max(0, end_x - crop_width)  # Shift start_x to maintain crop width
+
+            # Crop the region
             cropped_region = image[:, start_x:end_x]
             cropped_regions.append(cropped_region)
 
@@ -79,10 +79,16 @@ for trnv_image in os.listdir(trnv_image_loc):
 
             # Save the cropped region
             filename = f"cropped_region_{x}_{y}.jpg"
-            cv2.imwrite(os.path.join(r"C:\Users\c883206\OneDrive - BNSF Railway\RoboRailCop\2025-01-16_all_trnv_images\crops", filename), resized_cropped_region)
+            cv2.imwrite(
+                os.path.join(
+                    r"C:\Users\c883206\OneDrive - BNSF Railway\RoboRailCop\2025-01-16_all_trnv_images\crops",
+                    filename,
+                ),
+                resized_cropped_region,
+            )
             print(f"Saved cropped region: {filename}")
 
-            # Display the cropped region for review
+            # Optionally display the cropped region for review
             # resized_cropped = resize_image(cropped_region)
             # cv2.imshow(f"Cropped Region {x}_{y}", resized_cropped)
             # cv2.waitKey(0)
